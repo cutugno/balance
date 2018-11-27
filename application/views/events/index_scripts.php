@@ -50,5 +50,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				swal('',resp.responseText,'error');
 			});
 	});
+	$("#update_event_btn").click(function() {
+		var dati=$("#events_update_form").serialize();
+		var url="<?= site_url('events/update') ?>";
+		$.post(url,dati)
+			.success(function(resp) {
+				swal('',resp,'success').then((result) => {
+					get_events();
+				});
+			})
+			.fail(function(resp) {
+				swal('',resp.responseText,'error');
+			});
+	});
+	$("body").on("click",".delete_event_btn",function() {
+		var id=$(this).attr("data-id");
+		var url="<?= site_url('events/delete/') ?>"+id;
+		$.get(url)
+			.success(function(resp) {
+				swal('',resp,'success').then((result) => {
+					resetForm($("#events_update_form"));
+					get_events();
+				});
+			})
+			.fail(function(resp) {
+				swal('',resp.responseText,'error');
+			});
+				
+	});
+	
 </script>
 
